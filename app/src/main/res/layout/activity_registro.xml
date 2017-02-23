@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_marginTop="30dp"
+            android:id="@+id/txtUserNane"
+            android:hint="Nombre de usuario"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:password="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/txtPwd"
+            android:hint="Contraseña"
+            android:layout_below="@+id/txtUserNane"
+            android:layout_alignStart="@+id/txtUserNane"
+            android:password="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:layout_below="@+id/txtPwd"
+            android:layout_alignStart="@+id/txtPwd"
+            android:id="@+id/txtRePwd"
+            android:hint="Repita contraseña"
+            android:password="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/txtRePwd"
+            android:layout_alignStart="@+id/txtRePwd"
+            android:id="@+id/txtNombre"
+            android:hint="Nombre" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/txtNombre"
+            android:layout_alignEnd="@+id/txtNombre"
+            android:id="@+id/txtApel1"
+            android:hint="Apellido 1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/txtApel1"
+            android:layout_alignStart="@+id/txtApel1"
+            android:id="@+id/txtApel2"
+            android:hint="Apellido 2" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/txtApel2"
+            android:layout_alignStart="@+id/txtApel2"
+            android:id="@+id/txtEmail"
+            android:hint="Email" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_below="@+id/txtEmail"
+            android:layout_alignEnd="@+id/txtEmail"
+            android:id="@+id/txtTlf"
+            android:hint="Tlf. móvil"
+            android:phoneNumber="true" />
+
+        <Button
+            android:text="Registrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTlf"
+            android:layout_marginTop="36dp"
+            android:id="@+id/txtRegistrarse"
+            android:layout_alignEnd="@+id/txtTlf"
+            android:layout_alignStart="@+id/txtTlf" />
+    </RelativeLayout>
+</LinearLayout>

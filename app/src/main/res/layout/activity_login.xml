@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.semauleo.globalparkmeters.Login"
+    android:weightSum="1"
+    android:background="@android:color/background_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="Registrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnAcceder"
+            android:layout_marginTop="13dp"
+            android:id="@+id/btnRegistrarse"
+            android:layout_alignEnd="@+id/btnAcceder"
+            android:layout_alignStart="@+id/btnAcceder" />
+
+        <Button
+            android:text="Acceder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:id="@+id/btnAcceder"
+            android:layout_below="@+id/txtPwd"
+            android:layout_alignStart="@+id/txtPwd"
+            android:layout_alignEnd="@+id/txtPwd" />
+
+        <ImageView
+            android:layout_width="175dp"
+            android:layout_height="205dp"
+            app:srcCompat="@mipmap/logo"
+            android:id="@+id/imageView"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/txtUserName"
+            android:layout_alignStart="@+id/txtUserName" />
+
+        <EditText
+            android:id="@+id/txtPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:textColorLink="@android:color/black"
+            android:hint="Password"
+            android:layout_below="@+id/txtUserName"
+            android:layout_alignStart="@+id/txtUserName" />
+
+        <EditText
+            android:inputType="textPersonName"
+            android:hint="Nombre"
+            android:ems="10"
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textColorLink="@android:color/background_dark"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+</LinearLayout>
