@@ -45,6 +45,9 @@ public class Registro extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
+
+
+
         UserName = (EditText) findViewById(R.id.txtUserNane);
         PassWord = (EditText) findViewById(R.id.txtPwd);
         RePassWord = (EditText) findViewById(R.id.txtRePwd);
