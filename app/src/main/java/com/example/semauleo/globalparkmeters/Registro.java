@@ -3,31 +3,23 @@ package com.example.semauleo.globalparkmeters;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Locale;
+import java.security.MessageDigest;
+
 
 /**
  * Created by semauleo on 23/02/2017.
@@ -44,10 +36,7 @@ public class Registro extends AppCompatActivity{
     EditText Email;
     EditText Telefono;
 
-    private  boolean UserName_OK;
-    private  boolean Email_OK;
-
-    private String ip = "10.128.3.245";
+    private String ip = "192.168.1.2";
 
     private Button guardar;
 
@@ -72,82 +61,21 @@ public class Registro extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                boolean error = false;
-                new comprobarNombreUsuario().execute("http://"+ip+"/movil/consultarUser.php?user="+UserName.getText().toString().trim());
-                new comprobarEmail().execute("http://"+ip+"/movil/consultarEmail.php?email="+Email.getText().toString().trim());
+                new comprobarDatos(v).execute("http://"+ip+"/movil/verificar.php?usuario="+UserName.getText().toString().trim()+"&email="+Email.getText().toString().trim());
 
-                System.out.print("boleano2: "+UserName_OK);
-
-
-                if(UserName.getText().toString().trim().equals("")){
-                    error = true;
-                    UserName.setError("Este campo es requerido");
-                }
-
-                if(PassWord.getText().toString().trim().equals("")){
-                    error = true;
-                    PassWord.setError("Este campo es requerido");
-                }
-
-                if(RePassWord.getText().toString().trim().equals("")){
-                    error = true;
-                    RePassWord.setError("Este campo es requerido");
-                }
-
-                if(Nombre.getText().toString().trim().equals("")){
-                    error = true;
-                    Nombre.setError("Este campo es requerido");
-                }
-
-                if(Apellido1.getText().toString().trim().equals("")){
-                    error = true;
-                    Apellido1.setError("Este campo es requerido");
-                }
-
-                if(Apellido2.getText().toString().trim().equals("")){
-                    error = true;
-                    Apellido2.setError("Este campo es requerido");
-                }
-
-                if(Email.getText().toString().trim().equals("")){
-                    error = true;
-                    Email.setError("Este campo es requerido");
-                }
-
-                if(Telefono.getText().toString().trim().equals("")){
-                    error = true;
-                    Telefono.setError("Este campo es requerido");
-                }
-
-                if(!PassWord.getText().toString().trim().equals(RePassWord.getText().toString().trim())){
-                    error = true;
-                    PassWord.setError("Las contraseñas son diferentes");
-                    RePassWord.setError("Las contraseñas son diferentes");
-                }
-
-               if(!Email_OK){
-                    error = true;
-                    Email.setError("El email ya está registrado");
-               }
-
-                if(!UserName_OK){
-                    error = true;
-                    UserName.setError("El usuario ya está registrado");
-                }
-
-                Toast.makeText(getApplicationContext(), "boleano2: "+UserName_OK, Toast.LENGTH_LONG).show();
-
-                if(!error){
-                    new guardarDatos().execute("http://"+ip+"/movil/guardar.php?username="+UserName.getText().toString()+"&password="+PassWord.getText().toString()+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString()+"&telefono="+Telefono.getText().toString());
-                   Intent intent = new Intent (v.getContext(), Login.class);
-                   startActivityForResult(intent, 0);
-               }
             }
         });
     }
 
-    //Método para comprobar el email
-    private class comprobarEmail extends AsyncTask<String, Void, String> {
+    //Método para comprobar el email y el nombre de usuario
+    private class comprobarDatos extends AsyncTask<String, Void, String> {
+
+        View v;
+
+        public comprobarDatos(View vista) {
+            this.v = vista;
+        }
+
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -160,61 +88,87 @@ public class Registro extends AppCompatActivity{
         @Override
         protected void onPostExecute(String result) {
 
+            boolean error = false;
+
+            if(UserName.getText().toString().trim().equals("")){
+                error = true;
+                UserName.setError("Este campo es requerido");
+            }
+
+            if(PassWord.getText().toString().trim().equals("")){
+                error = true;
+                PassWord.setError("Este campo es requerido");
+            }
+
+            if(RePassWord.getText().toString().trim().equals("")){
+                error = true;
+                RePassWord.setError("Este campo es requerido");
+            }
+
+            if(Nombre.getText().toString().trim().equals("")){
+                error = true;
+                Nombre.setError("Este campo es requerido");
+            }
+
+            if(Apellido1.getText().toString().trim().equals("")){
+                error = true;
+                Apellido1.setError("Este campo es requerido");
+            }
+
+            if(Apellido2.getText().toString().trim().equals("")){
+                error = true;
+                Apellido2.setError("Este campo es requerido");
+            }
+
+            if(Email.getText().toString().trim().equals("")){
+                error = true;
+                Email.setError("Este campo es requerido");
+            }
+
+            if(Telefono.getText().toString().trim().equals("")){
+                error = true;
+                Telefono.setError("Este campo es requerido");
+            }
+
+            if(!PassWord.getText().toString().trim().equals(RePassWord.getText().toString().trim())){
+                error = true;
+                PassWord.setError("Las contraseñas son diferentes");
+                RePassWord.setError("Las contraseñas son diferentes");
+            }
+
             JSONObject ja = null;
 
             try {
                 ja = new JSONObject(result);
-                if(ja.getBoolean("esta")){
-                    Email_OK = false;
-                }else{
-                    Email_OK = true;
+                boolean esta_email = ja.getBoolean("esta_email");
+                boolean esta_user = ja.getBoolean("esta_user");
+
+                if(esta_email){
+                    error = true;
+                    Email.setError("El email ya está registrado");
                 }
+
+                if(esta_user){
+                    error = true;
+                    UserName.setError("El usuario ya está registrado");
+                }
+
+               if(!error){
+                    String hash= getMd5Key(PassWord.getText().toString());
+                    new guardarDatos().execute("http://"+ip+"/movil/guardar.php?username="+UserName.getText().toString()+"&password="+hash+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString()+"&telefono="+Telefono.getText().toString());
+                    Intent intent = new Intent (v.getContext(), Login.class);
+                    startActivityForResult(intent, 0);
+               }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
-    //Método para ocomprobar el user
-    private class comprobarNombreUsuario extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            JSONObject ja = null;
-
-            try {
-                ja = new JSONObject(result);
-                if(ja.getBoolean("esta")){
-                    UserName_OK = false;
-                }else{
-                    UserName_OK = true;
-                }
-                System.out.print("boleano: "+UserName_OK);
-                Toast.makeText(getApplicationContext(), "boleano1: "+UserName_OK, Toast.LENGTH_LONG).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     //Método para enviar datos a la base de datos
     private class guardarDatos extends AsyncTask<String, Void, String> {
+
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -268,5 +222,35 @@ public class Registro extends AppCompatActivity{
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
+    }
+
+    public static String getMd5Key(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+
+            byte byteData[] = md.digest();
+
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            System.out.println("Digest(in hex format):: " + sb.toString());
+
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                String hex = Integer.toHexString(0xff & byteData[i]);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            System.out.println("Digest(in hex format):: " + hexString.toString());
+
+            return hexString.toString();
+
+        } catch (Exception e) {
+
+        }
+        return "";
     }
 }
