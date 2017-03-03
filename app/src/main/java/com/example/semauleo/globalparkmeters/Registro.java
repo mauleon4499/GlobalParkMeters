@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.util.regex.Pattern;
 
 
 /**
@@ -98,9 +99,19 @@ public class Registro extends AppCompatActivity{
                 UserName.setError("Este campo es requerido");
             }
 
+            if(!isAlphaNumeric(UserName.getText().toString().trim())){
+                error = true;
+                UserName.setError("Solo números y caracteres");
+            }
+
             if(PassWord.getText().toString().trim().equals("")){
                 error = true;
                 PassWord.setError("Este campo es requerido");
+            }
+
+            if(PassWord.getText().toString().trim().length() < 8){
+                error = true;
+                PassWord.setError("La contraseña debe tener al menos 8 caracteres");
             }
 
             if(RePassWord.getText().toString().trim().equals("")){
@@ -126,6 +137,11 @@ public class Registro extends AppCompatActivity{
             if(Email.getText().toString().trim().equals("")){
                 error = true;
                 Email.setError("Este campo es requerido");
+            }
+
+            if(!isEmail(Email.getText().toString().trim())){
+                error = true;
+                Email.setError("Introduzca un email correcto");
             }
 
             if(Telefono.getText().toString().trim().equals("")){
@@ -218,13 +234,33 @@ public class Registro extends AppCompatActivity{
         }
     }
 
-    //Nétodo para leer los datos que envia el servidor
+    //Método para leer los datos que envia el servidor
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
+    }
+
+    //Método para comprobar que una cadena es alfanumérica
+    public  static boolean isAlphaNumeric(String cadena){
+        Pattern patron = Pattern.compile("^[a-zA-Z0-9]+$");
+        if (!patron.matcher(cadena).matches()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //Método para comprobar que una cadena es un email
+    public static boolean isEmail(String cadena){
+        Pattern patron = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        if (!patron.matcher(cadena).matches()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public static String getMd5Key(String password) {

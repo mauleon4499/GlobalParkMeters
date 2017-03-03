@@ -23,7 +23,8 @@
             android:hint="Nombre de usuario"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:password="false" />
+            android:password="false"
+            android:maxLength="50" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -34,7 +35,8 @@
             android:hint="Contraseña"
             android:layout_below="@+id/txtUserNane"
             android:layout_alignStart="@+id/txtUserNane"
-            android:password="true" />
+            android:password="true"
+            android:maxLength="50" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -45,6 +47,7 @@
             android:layout_alignStart="@+id/txtPwd"
             android:id="@+id/txtRePwd"
             android:hint="Repita contraseña"
+            android:maxLength="50"
             android:password="true" />
 
         <EditText
@@ -55,6 +58,7 @@
             android:layout_below="@+id/txtRePwd"
             android:layout_alignStart="@+id/txtRePwd"
             android:id="@+id/txtNombre"
+            android:maxLength="50"
             android:hint="Nombre" />
 
         <EditText
@@ -65,6 +69,7 @@
             android:layout_below="@+id/txtNombre"
             android:layout_alignEnd="@+id/txtNombre"
             android:id="@+id/txtApel1"
+            android:maxLength="50"
             android:hint="Apellido 1" />
 
         <EditText
@@ -75,6 +80,7 @@
             android:layout_below="@+id/txtApel1"
             android:layout_alignStart="@+id/txtApel1"
             android:id="@+id/txtApel2"
+            android:maxLength="50"
             android:hint="Apellido 2" />
 
         <EditText
@@ -85,6 +91,7 @@
             android:layout_below="@+id/txtApel2"
             android:layout_alignStart="@+id/txtApel2"
             android:id="@+id/txtEmail"
+            android:maxLength="50"
             android:hint="Email" />
 
         <EditText
@@ -96,6 +103,7 @@
             android:layout_alignEnd="@+id/txtEmail"
             android:id="@+id/txtTlf"
             android:hint="Tlf. móvil"
+            android:maxLength="50"
             android:phoneNumber="true" />
 
         <Button
