@@ -37,17 +37,12 @@ public class Registro extends AppCompatActivity{
     EditText Email;
     EditText Telefono;
 
-    private String ip = "192.168.1.2";
-
     private Button guardar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-
-
-
 
         UserName = (EditText) findViewById(R.id.txtUserNane);
         PassWord = (EditText) findViewById(R.id.txtPwd);
@@ -65,7 +60,7 @@ public class Registro extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                new comprobarDatos(v).execute("http://"+ip+"/movil/verificar.php?usuario="+UserName.getText().toString().trim()+"&email="+Email.getText().toString().trim());
+                new comprobarDatos(v).execute("http://"+getString(R.string.ip)+"/movil/verificar.php?usuario="+UserName.getText().toString().trim()+"&email="+Email.getText().toString().trim());
 
             }
         });
@@ -149,6 +144,11 @@ public class Registro extends AppCompatActivity{
                 Telefono.setError("Este campo es requerido");
             }
 
+            if(Telefono.getText().toString().trim().length() != 9){
+                error = true;
+                Telefono.setError("El teléfono es incorrecto");
+            }
+
             if(!PassWord.getText().toString().trim().equals(RePassWord.getText().toString().trim())){
                 error = true;
                 PassWord.setError("Las contraseñas son diferentes");
@@ -174,7 +174,7 @@ public class Registro extends AppCompatActivity{
 
                if(!error){
                     String hash= getMd5Key(PassWord.getText().toString());
-                    new guardarDatos().execute("http://"+ip+"/movil/guardar.php?username="+UserName.getText().toString()+"&password="+hash+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString()+"&telefono="+Telefono.getText().toString());
+                    new guardarDatos().execute("http://"+getString(R.string.ip)+"/movil/guardar.php?username="+UserName.getText().toString()+"&password="+hash+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString()+"&telefono="+Telefono.getText().toString());
                     Intent intent = new Intent (v.getContext(), Login.class);
                     startActivityForResult(intent, 0);
                }
@@ -263,6 +263,7 @@ public class Registro extends AppCompatActivity{
         }
     }
 
+    //Función para generación del hash
     public static String getMd5Key(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

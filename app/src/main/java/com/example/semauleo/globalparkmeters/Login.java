@@ -8,24 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
-
-import static com.example.semauleo.globalparkmeters.R.id.txtNombre;
 
 public class Login extends AppCompatActivity {
 
@@ -33,8 +25,6 @@ public class Login extends AppCompatActivity {
     Button btnAcceder;
     EditText txtUser;
     EditText txtPwd;
-
-    private String ip = "192.168.1.2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +47,7 @@ public class Login extends AppCompatActivity {
         btnAcceder.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 String hash= getMd5Key(txtPwd.getText().toString());
-                new acceso(v).execute("http://"+ip+"/movil/login.php?usuario="+txtUser.getText().toString()+"&password="+hash);
+                new acceso(v).execute("http://"+getString(R.string.ip)+"/movil/login.php?usuario="+txtUser.getText().toString()+"&password="+hash);
             }
         });
     }
@@ -142,6 +132,7 @@ public class Login extends AppCompatActivity {
         return new String(buffer);
     }
 
+    //Función para generación del hash
     public static String getMd5Key(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
