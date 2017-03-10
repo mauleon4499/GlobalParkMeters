@@ -1,13 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_principal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:rowCount="3"
+    android:columnCount="2"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.semauleo.globalparkmeters.Principal">
+    tools:context="com.example.semauleo.globalparkmeters.Principal"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:padding="10dp"
+    android:layout_marginLeft="20dp"
+    android:orientation="horizontal">
 
-</RelativeLayout>
+    <TableRow android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="Configuración"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/btnConfiguracion"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/btnMapa"
+            android:background="@android:color/holo_blue_light"
+            android:layout_margin="10dp"/>
+
+        <Button
+        android:text="Premium"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:id="@+id/btnPremium"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/btnConfiguracion"
+        android:background="@android:color/holo_blue_light"
+        android:layout_margin="10dp"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent">
+
+        <Button
+            android:text="Pagar"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:id="@+id/btnPagar"
+            android:width="50dp"
+            android:height="50dp"
+            android:background="@android:color/holo_blue_light"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_margin="10dp"/>
+
+        <Button
+        android:text="Mapa"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:id="@+id/btnMapa"
+        android:textStyle="bold"
+        android:background="@android:color/holo_blue_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="14dp"
+            android:layout_margin="10dp"/>
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:text="Perfil"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:id="@+id/btnPerfil"
+            android:textStyle="bold"
+            android:background="@android:color/holo_blue_light"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/btnPagar"
+            android:layout_margin="10dp"/>
+
+        <Button
+        android:text="Tarifas"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignTop="@+id/btnConfiguracion"
+        android:layout_alignStart="@+id/btnPagar"
+        android:id="@+id/btnTarifas"
+        android:textStyle="bold"
+        android:background="@android:color/holo_blue_light"
+        android:layout_alignBottom="@+id/btnConfiguracion"
+        android:layout_margin="10dp"/>
+    </TableRow>
+
+</TableLayout>

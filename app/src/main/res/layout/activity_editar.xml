@@ -29,41 +29,6 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/EditPwd"
-            android:hint="Contraseña"
-            android:layout_below="@+id/EditUserNane"
-            android:layout_alignStart="@+id/EditUserNane"
-            android:password="true"
-            android:maxLength="50" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:layout_below="@+id/EditPwd"
-            android:layout_alignStart="@+id/EditPwd"
-            android:id="@+id/EditRePwd"
-            android:hint="Repita contraseña"
-            android:maxLength="50"
-            android:password="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_below="@+id/EditRePwd"
-            android:layout_alignStart="@+id/EditRePwd"
-            android:id="@+id/EditNombre"
-            android:maxLength="50"
-            android:hint="Nombre" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:layout_below="@+id/EditNombre"
@@ -95,15 +60,26 @@
             android:hint="Email" />
 
         <Button
-            android:text="Registrarse"
+            android:text="Modificar"
             android:layout_height="wrap_content"
             android:layout_marginTop="29dp"
-            android:id="@+id/txtRegistrarse"
+            android:id="@+id/btnModificar"
             android:onClick="insertar"
             android:background="@android:color/holo_blue_light"
             android:textStyle="bold"
             android:layout_below="@+id/EditEmail"
             android:layout_centerHorizontal="true"
             android:layout_width="220dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/EditNombre"
+            android:maxLength="50"
+            android:hint="Nombre"
+            android:layout_below="@+id/EditUserNane"
+            android:layout_alignEnd="@+id/btnModificar" />
     </RelativeLayout>
 </LinearLayout>

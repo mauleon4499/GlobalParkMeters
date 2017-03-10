@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Registro"></activity>
-        <activity android:name=".Principal"></activity>
+        <activity android:name=".Registro" />
+        <activity android:name=".Principal" />
+        <activity android:name=".Perfil" />
+        <activity android:name=".Editar" />
+        <activity android:name=".EditarPassword" />
+        <activity android:name=".Matriculas"></activity>
     </application>
 
 </manifest>

@@ -2,15 +2,18 @@ package com.example.semauleo.globalparkmeters;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,12 +24,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.util.regex.Pattern;
 
-
-/**
- * Created by semauleo on 23/02/2017.
- */
-
-public class Registro extends AppCompatActivity{
+public class Editar extends AppCompatActivity {
 
     EditText UserName;
     EditText PassWord;
@@ -36,42 +34,58 @@ public class Registro extends AppCompatActivity{
     EditText Apellido2;
     EditText Email;
 
-    private Button guardar;
+    private Button modificar;
+    private String email;
+    private String user;
+
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro);
+        setContentView(R.layout.activity_editar);
+        id = getIntent().getStringExtra("id");
+        System.out.println("id: " + id);
 
         UserName = (EditText) findViewById(R.id.EditUserNane);
-        PassWord = (EditText) findViewById(R.id.EditPwd);
-        RePassWord = (EditText) findViewById(R.id.EditRePwd);
         Nombre = (EditText) findViewById(R.id.EditNombre);
         Apellido1 = (EditText) findViewById(R.id.EditApel1);
         Apellido2 = (EditText) findViewById(R.id.EditApel2);
         Email = (EditText) findViewById(R.id.EditEmail);
 
-        //Método para enviar los datos a la base de datos.
-        //IMPORTANTE: La ip puesta cambian en fución de la ip del pc, además hace falta el archivo de conexion.php
-        guardar = (Button) findViewById(R.id.txtRegistrarse);
-        guardar.setOnClickListener(new View.OnClickListener() {
+        new Editar.obtenerDatos().execute("http://"+getString(R.string.ip)+"/movil/datosPersonales.php?id="+id.toString().trim());
+
+         modificar = (Button) findViewById(R.id.btnModificar);
+         modificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new comprobarDatos(v).execute("http://"+getString(R.string.ip)+"/movil/verificar.php?usuario="+UserName.getText().toString().trim()+"&email="+Email.getText().toString().trim());
+                new Editar.comprobarDatos().execute("http://"+getString(R.string.ip)+"/movil/verificar.php?usuario="+UserName.getText().toString().trim()+"&email="+Email.getText().toString().trim());
 
             }
         });
     }
 
+    //Método para enviar datos a la base de datos
+    private class guardarDatos extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return downloadUrl(urls[0]);
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL may be invalid.";
+            }
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+            Toast.makeText(getApplicationContext(), "Se almacenaron los datos correctamente", Toast.LENGTH_LONG).show();
+        }
+    }
+
     //Método para comprobar el email y el nombre de usuario
     private class comprobarDatos extends AsyncTask<String, Void, String> {
-
-        View v;
-
-        public comprobarDatos(View vista) {
-            this.v = vista;
-        }
 
         @Override
         protected String doInBackground(String... urls) {
@@ -95,21 +109,6 @@ public class Registro extends AppCompatActivity{
             if(!isAlphaNumeric(UserName.getText().toString().trim())){
                 error = true;
                 UserName.setError("Solo números y caracteres");
-            }
-
-            if(PassWord.getText().toString().trim().equals("")){
-                error = true;
-                PassWord.setError("Este campo es requerido");
-            }
-
-            if(PassWord.getText().toString().trim().length() < 8){
-                error = true;
-                PassWord.setError("La contraseña debe tener al menos 8 caracteres");
-            }
-
-            if(RePassWord.getText().toString().trim().equals("")){
-                error = true;
-                RePassWord.setError("Este campo es requerido");
             }
 
             if(Nombre.getText().toString().trim().equals("")){
@@ -137,12 +136,6 @@ public class Registro extends AppCompatActivity{
                 Email.setError("Introduzca un email correcto");
             }
 
-            if(!PassWord.getText().toString().trim().equals(RePassWord.getText().toString().trim())){
-                error = true;
-                PassWord.setError("Las contraseñas son diferentes");
-                RePassWord.setError("Las contraseñas son diferentes");
-            }
-
             JSONObject ja = null;
 
             try {
@@ -150,23 +143,21 @@ public class Registro extends AppCompatActivity{
                 boolean esta_email = ja.getBoolean("esta_email");
                 boolean esta_user = ja.getBoolean("esta_user");
 
-                if(esta_email){
+                if((esta_email)&&(!email.equals(Email.getText().toString()))){
                     error = true;
                     Email.setError("El email ya está registrado");
                 }
 
-                if(esta_user){
+                if((esta_user)&&(!user.equals(UserName.getText().toString()))){
                     error = true;
                     UserName.setError("El usuario ya está registrado");
                 }
 
-               if(!error){
-                    String hash= getMd5Key(PassWord.getText().toString());
+                if(!error){
+                    String hash;
 
-                    new guardarDatos().execute("http://"+getString(R.string.ip)+"/movil/guardar.php?username="+UserName.getText().toString()+"&password="+hash+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString());
-                    Intent intent = new Intent (v.getContext(), Login.class);
-                    startActivityForResult(intent, 0);
-               }
+                    new Editar.guardarDatos().execute("http://"+getString(R.string.ip)+"/movil/editar.php?username="+UserName.getText().toString()+"&nombre="+Nombre.getText().toString()+"&apellido1="+Apellido1.getText().toString()+"&apellido2="+Apellido2.getText().toString()+"&email="+Email.getText().toString()+"&id="+id);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -174,8 +165,8 @@ public class Registro extends AppCompatActivity{
         }
     }
 
-    //Método para enviar datos a la base de datos
-    private class guardarDatos extends AsyncTask<String, Void, String> {
+    //Método para comprobar el nombre de usuario y la contraseña
+    private class obtenerDatos extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -188,7 +179,22 @@ public class Registro extends AppCompatActivity{
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(getApplicationContext(), "Se almacenaron los datos correctamente", Toast.LENGTH_LONG).show();
+            JSONArray ja = null;
+
+            try {
+                ja = new JSONArray(result);
+                UserName.setText(ja.getString(1));
+                user = ja.getString(1);
+                Nombre.setText(ja.getString(3));
+                Apellido1.setText(ja.getString(4));
+                Apellido2.setText(ja.getString(5));
+                Email.setText(ja.getString(6));
+                email = ja.getString(6);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -223,7 +229,7 @@ public class Registro extends AppCompatActivity{
         }
     }
 
-    //Método para leer los datos que envia el servidor
+    //Nétodo para leer los datos que envia el servidor
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
@@ -250,36 +256,5 @@ public class Registro extends AppCompatActivity{
         } else {
             return true;
         }
-    }
-
-    //Función para generación del hash
-    public static String getMd5Key(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-
-            byte byteData[] = md.digest();
-
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < byteData.length; i++) {
-                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-            }
-
-            System.out.println("Digest(in hex format):: " + sb.toString());
-
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < byteData.length; i++) {
-                String hex = Integer.toHexString(0xff & byteData[i]);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            System.out.println("Digest(in hex format):: " + hexString.toString());
-
-            return hexString.toString();
-
-        } catch (Exception e) {
-
-        }
-        return "";
     }
 }

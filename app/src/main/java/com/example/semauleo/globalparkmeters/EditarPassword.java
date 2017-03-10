@@ -1,6 +1,5 @@
 package com.example.semauleo.globalparkmeters;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,47 +18,62 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 
-public class Login extends AppCompatActivity {
+public class EditarPassword extends AppCompatActivity {
 
-    Button btnRegistrase;
-    Button btnAcceder;
-    EditText txtUser;
-    EditText txtPwd;
+    public EditText Password;
+    public EditText RePassword;
+    Button btnEditPassword;
+
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_editar_password);
 
-        txtUser = (EditText) findViewById(R.id.txtUser);
-        txtPwd = (EditText) findViewById(R.id.EditPwd);
+        Password = (EditText) findViewById(R.id.editPassword);
+        RePassword = (EditText) findViewById(R.id.editRePassword);
 
-        //Método para cambiar al activity Registro
-        btnRegistrase = (Button) findViewById(R.id.btnRegistrarse);
-        btnRegistrase.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), Registro.class);
-                startActivityForResult(intent, 0); }
-        });
+        id = getIntent().getStringExtra("id");
 
-        //Método para loguearse
-        btnAcceder = (Button) findViewById(R.id.btnAcceder);
-        btnAcceder.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                String hash= getMd5Key(txtPwd.getText().toString());
-                new acceso(v).execute("http://"+getString(R.string.ip)+"/movil/login.php?usuario="+txtUser.getText().toString()+"&password="+hash);
+        btnEditPassword = (Button) findViewById(R.id.btnEditPass);
+        btnEditPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean error = false;
+
+                if(Password.getText().toString().trim().equals("")){
+                    error = true;
+                    Password.setError("Este campo es requerido");
+                }
+
+                if(Password.getText().toString().trim().length() < 8){
+                    error = true;
+                    Password.setError("La contraseña debe tener al menos 8 caracteres");
+                }
+
+                if(RePassword.getText().toString().trim().equals("")){
+                    error = true;
+                    RePassword.setError("Este campo es requerido");
+                }
+
+                if(!Password.getText().toString().trim().equals(RePassword.getText().toString().trim())){
+                    error = true;
+                    Password.setError("Las contraseñas son diferentes");
+                    RePassword.setError("Las contraseñas son diferentes");
+                }
+
+                if(!error) {
+                    String hash = getMd5Key(Password.getText().toString());
+                    new EditarPassword.guardarPass().execute("http://" + getString(R.string.ip) + "/movil/editarPass.php?id=" + id + "&password=" + hash);
+                }
             }
         });
     }
 
-    //Método para comprobar el nombre de usuario y la contraseña
-    private class acceso extends AsyncTask<String, Void, String> {
-
-        View v;
-
-        public acceso(View vista) {
-            this.v = vista;
-        }
+    //Método para enviar datos a la base de datos
+    private class guardarPass extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -72,25 +86,7 @@ public class Login extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            JSONObject ja = null;
-
-            try {
-                ja = new JSONObject(result);
-                boolean login_correcto = ja.getBoolean("login_correcto");
-
-                if(login_correcto){
-                    String id = ja.getString("id");
-                    Intent intent = new Intent (v.getContext(), Principal.class);
-                    intent.putExtra("id", id);
-                    startActivity(intent);
-                }else{
-                    txtUser.setError("Usuario o contraseña incorrectos");
-                    txtPwd.setError("Usuario o contraseña incorrectos");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            Toast.makeText(getApplicationContext(), "Se almacenaron los datos correctamente", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -125,7 +121,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    //Nétodo para leer los datos que envia el servidor
+    //Método para leer los datos que envia el servidor
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");

@@ -22,7 +22,9 @@
             android:layout_marginTop="13dp"
             android:id="@+id/btnRegistrarse"
             android:layout_alignEnd="@+id/btnAcceder"
-            android:layout_alignStart="@+id/btnAcceder" />
+            android:layout_alignStart="@+id/btnAcceder"
+            android:background="@android:color/holo_blue_light"
+            android:textStyle="bold"/>
 
         <Button
             android:text="Acceder"
@@ -30,22 +32,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
             android:id="@+id/btnAcceder"
-            android:layout_below="@+id/txtPwd"
-            android:layout_alignStart="@+id/txtPwd"
-            android:layout_alignEnd="@+id/txtPwd"
-            android:onClick="login"/>
+            android:layout_below="@+id/EditPwd"
+            android:layout_alignStart="@+id/EditPwd"
+            android:layout_alignEnd="@+id/EditPwd"
+            android:onClick="login"
+            android:background="@android:color/holo_blue_light"
+            android:textStyle="bold"/>
 
         <ImageView
             android:layout_width="175dp"
             android:layout_height="205dp"
             app:srcCompat="@mipmap/logo"
             android:id="@+id/imageView"
+            android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignEnd="@+id/txtUser"
             android:layout_alignStart="@+id/txtUser" />
 
         <EditText
-            android:id="@+id/txtPwd"
+            android:id="@+id/EditPwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
