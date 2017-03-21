@@ -10,4 +10,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.semauleo.globalparkmeters.Matriculas">
 
+    <Button
+        android:text="Guardar datos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSaveMatriculas"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/holo_blue_light" />
+
+    <Button
+        android:text="Añadir matrícula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addMatricula"
+        android:layout_above="@+id/btnSaveMatriculas"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/holo_blue_light"
+        android:onClick="agregar"/>
+
+    <ListView
+        android:id="@+id/lvMatriculas"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addMatricula"
+        android:layout_width="match_parent" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/txtMatricula"
+        android:hint="Introduce matricula"
+        android:layout_alignBaseline="@+id/addMatricula"
+        android:layout_alignBottom="@+id/addMatricula"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
