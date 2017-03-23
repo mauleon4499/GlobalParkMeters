@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">GlobalParkMeters</string>
-    <string name="ip">10.128.1.53</string>
+    <string name="ip">10.11.68.15</string>
 </resources>

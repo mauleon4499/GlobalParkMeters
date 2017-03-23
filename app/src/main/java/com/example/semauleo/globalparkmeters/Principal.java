@@ -27,5 +27,14 @@ public class Principal extends AppCompatActivity {
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });
+
+        //Método para acceder al pagos
+        btnPagar = (Button) findViewById(R.id.btnPagar);
+        btnPagar.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Pagos.class);
+                intent.putExtra("id", id);
+                startActivityForResult(intent, 0); }
+        });
     }
 }
