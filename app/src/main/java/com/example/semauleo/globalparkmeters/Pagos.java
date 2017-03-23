@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener {
 
-    String id;
-    Spinner spCiudades;
-    Spinner spZonas;
+    private String id;
+    private Spinner spCiudades;
+    private Spinner spZonas;
+    private SeekBar barraTiempo;
+    private TextView txtTiempo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,11 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
 
         spCiudades.setOnItemSelectedListener(this);
 
+        barraTiempo = (SeekBar) findViewById(R.id.barraTiempo);
+        barraTiempo.setMax(2000);
 
+        barraTiempo.setOnSeekBarChangeListener(this);
+        txtTiempo = (TextView) findViewById(R.id.txtTiempo);
     }
 
     @Override
@@ -60,6 +69,21 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        txtTiempo.setText(String.valueOf(progress));
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
 }
