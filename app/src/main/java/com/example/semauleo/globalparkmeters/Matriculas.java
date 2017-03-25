@@ -146,7 +146,6 @@ public class Matriculas extends AppCompatActivity {
 
             try {
                 ja = new JSONArray(result);
-                System.out.print(ja);
                 if(ja.length() != 0){
                     for(int i =0;i<ja.length();i++){
                         matriculas.add(ja.getString(i));
