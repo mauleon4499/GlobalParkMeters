@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.semauleo.globalparkmeters.Pagos">
+    tools:context="com.example.semauleo.globalparkmeters.Pagos"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/textView2"
@@ -18,30 +19,64 @@
     <Spinner
         android:id="@+id/spCiudades"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Zona"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"/>
 
     <Spinner
         android:id="@+id/spZonas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Matrícula"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"/>
 
     <Spinner
         android:id="@+id/spMatricula"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.17"
+            android:text="Tiempo: "
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtTiempo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/barraTiempo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"/>
 
 </LinearLayout>
