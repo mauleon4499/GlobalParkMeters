@@ -1,82 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.semauleo.globalparkmeters.Pagos"
-    android:weightSum="1">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin" tools:context="com.example.semauleo.globalparkmeters.Pagos">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ciudad"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"/>
+        <TabHost
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/tabHost"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
 
-    <Spinner
-        android:id="@+id/spCiudades"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Zona"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"/>
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"></TabWidget>
 
-    <Spinner
-        android:id="@+id/spZonas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"/>
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Matrícula"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"/>
+                    <LinearLayout
+                        android:id="@+id/Parking"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spMatricula"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="31dp"
-        android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Ciudad"
+                                android:textSize="18sp"
+                                android:layout_marginTop="5dp"/>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.17"
-            android:text="Tiempo: "
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"/>
+                            <Spinner
+                                android:id="@+id/spCiudades"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"/>
 
-        <TextView
-            android:id="@+id/txtTiempo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"/>
-    </LinearLayout>
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Zona"
+                                android:textSize="18sp"
+                                android:layout_marginTop="5dp"/>
 
-    <SeekBar
-        android:id="@+id/barraTiempo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"/>
+                            <Spinner
+                                android:id="@+id/spZonas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"/>
 
-</LinearLayout>
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Matrícula"
+                                android:textSize="18sp"
+                                android:layout_marginTop="5dp"/>
+
+                            <Spinner
+                                android:id="@+id/spMatricula"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <EditText
+                                    android:id="@+id/textoHora"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:ems="10"
+                                    android:inputType="textPersonName"
+                                    android:text="Tiempo"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/tiempo"
+                                    android:layout_width="75dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0.19"
+                                    android:digits="0123456789:"
+                                    android:ems="10"
+                                    android:hint="hh:mm"
+                                    android:inputType="text"
+                                    android:maxLength="5"
+                                    android:singleLine="false" />
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/textoImporte"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@+id/txtImporte"
+                                    android:layout_alignBottom="@+id/txtImporte"
+                                    android:layout_toStartOf="@+id/btnPagar"
+                                    android:text="Importe:"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="26sp" />
+
+                                <TextView
+                                    android:id="@+id/txtImporte"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@+id/txtMoneda"
+                                    android:layout_alignStart="@+id/btnPagar"
+                                    android:layout_marginStart="28dp"
+                                    android:text="00.00"
+                                    android:textColor="@android:color/holo_red_dark"
+                                    android:textSize="26sp" />
+
+                                <Button
+                                    android:id="@+id/btnPagar"
+                                    style="@style/Widget.AppCompat.Button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginBottom="14dp"
+                                    android:background="@android:color/holo_blue_light"
+                                    android:text="Pagar"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtMoneda"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_toEndOf="@+id/txtImporte"
+                                    android:text="euros"
+                                    android:textColor="@android:color/holo_red_dark"
+                                    android:textSize="26sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Forma_Pago"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"></LinearLayout>
+                    </LinearLayout>
+
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+</RelativeLayout>

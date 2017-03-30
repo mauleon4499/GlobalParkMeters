@@ -47,18 +47,18 @@
         android:layout_width="match_parent">
 
         <Button
-            android:text="Pagar"
+            android:id="@+id/btnPagar"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:id="@+id/btnPagar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
             android:width="50dp"
             android:height="50dp"
             android:background="@android:color/holo_blue_light"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:layout_margin="10dp"/>
+            android:text="Pagar"
+            android:textStyle="bold" />
 
         <Button
         android:text="Mapa"
