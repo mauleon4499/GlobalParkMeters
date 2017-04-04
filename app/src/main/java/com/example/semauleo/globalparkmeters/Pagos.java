@@ -1,6 +1,8 @@
 package com.example.semauleo.globalparkmeters;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.IntegerRes;
@@ -19,6 +21,12 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,16 +36,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static com.example.semauleo.globalparkmeters.R.id.textView;
 
-public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     TabHost TbH;
+
+    private EditText etPaypal;
 
     String id;
     Spinner spCiudades;
@@ -57,10 +69,20 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
     private ArrayAdapter<String> adaptadorZonas;
     private JSONObject datos;
 
-    private Button calcular;
+    private Button pagar;
     private EditText tiempo;
     private EditText horaMax;
     private TextView importe;
+
+    public static final int PAYPAL_REQUEST_CODE = 123;
+
+
+    //Paypal Configuration Object
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
 
 
     @Override
@@ -108,14 +130,49 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.equals("") && s.length()>3 && s.toString().indexOf(":")!=-1) {
                     String t = tiempo.getText().toString();
-                    String[] tiempo = t.split(":");
-                    int h = Integer.parseInt(tiempo[0]);
-                    int m = Integer.parseInt(tiempo[1]);
-                    Double coste = ((60 * h) + m) * precioZonaE;
-                    DecimalFormat f = new DecimalFormat("##.00");
-                    importe.setText(f.format(coste));
+                    Pattern patron = Pattern.compile("^[0-9]{1,2}:[0-9]{2}$");
+                    if (patron.matcher(t).matches()) {
+                        int zonaE = spZonas.getSelectedItemPosition();
+                        if (zonaE != -1) {
+                            boolean correcto = true;
+
+                            String[] tiempoMax = horaZonaE.split(":");
+                            int hM = Integer.parseInt(tiempoMax[0]);
+                            int mM = Integer.parseInt(tiempoMax[1]);
+
+                            String[] tiempoP = t.split(":");
+                            int h = Integer.parseInt(tiempoP[0]);
+                            int m = Integer.parseInt(tiempoP[1]);
+
+                            //Comprobaciones de teimpo máximo
+                            //La hora puesta es mayor que la permitida
+                            if(h>hM){
+                                correcto = false;
+                            }
+                            //La hora puesta es igual que la permitida pero los minutos puestos son mayores que los permitidos
+                            if((h==hM)&&(m>mM)){
+                                correcto = false;
+                            }
+
+                            if (correcto) {
+                                Double coste = ((60 * h) + m) * precioZonaE;
+                                DecimalFormat f = new DecimalFormat("0.00");
+                                importe.setText(f.format(coste));
+                            }else{
+                                tiempo.setError("Dato incorrecto");
+                                importe.setText("00.00");
+                            }
+                        } else {
+                            importe.setText("00.00");
+                        }
+
+                    }else{
+                        tiempo.setError("Dato incorrecto");
+                        importe.setText("00.00");
+                    }
                 }else{
                     tiempo.setError("Dato incorrecto");
+                    importe.setText("00.00");
                 }
             }
 
@@ -125,6 +182,81 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
             public void afterTextChanged(Editable s) {
             }
         });
+
+        etPaypal = (EditText) findViewById(R.id.etPaypal);
+        pagar = (Button) findViewById(R.id.btnPagar);
+        pagar.setOnClickListener(this);
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getPayment();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+    private void getPayment() {
+        String precio = importe.getText().toString();
+
+        //Creating a paypalpayment
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(precio)), "EUR", "Simplified Coding Fee",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        //Puting paypal payment to the intent
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //If the result is from paypal
+        if (requestCode == PAYPAL_REQUEST_CODE) {
+
+            //If the result is OK i.e. user has not canceled the payment
+            if (resultCode == Activity.RESULT_OK) {
+                //Getting the payment confirmation
+                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+
+                //if confirmation is not null
+                if (confirm != null) {
+                    try {
+                        //Getting the payment details
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.i("paymentExample", paymentDetails);
+
+                        //Starting a new activity for the payment details and also putting the payment details with intent
+                        startActivity(new Intent(this, DatosPagoActivity.class)
+                                .putExtra("PaymentDetails", paymentDetails)
+                                .putExtra("PaymentAmount", importe.getText().toString()));
+                        //Pasar datos del pago de la zona
+                        //IMPORTANTE: Pasar la ciudad, zona y tiempo
+
+                    } catch (JSONException e) {
+                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("paymentExample", "The user canceled.");
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+            }
+        }
     }
 
     @Override
@@ -175,6 +307,51 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                    }
                 }
                 horaMax.setText("Tiempo max: "+horaZonaE);
+
+                //Actualizar el tiempo si cumple condiciones
+                int numeroZona = spZonas.getSelectedItemPosition();
+                String tiempoPuesto = tiempo.getText().toString();
+
+                if((numeroZona!=-1)&&(!tiempoPuesto.equals(""))){
+                    String t = tiempo.getText().toString();
+                    Pattern patron = Pattern.compile("^[0-9]{1,2}:[0-9]{2}$");
+
+                    if (patron.matcher(t).matches()) {
+                        boolean correcto = true;
+
+                        String[] tiempoMax = horaZonaE.split(":");
+                        int hM = Integer.parseInt(tiempoMax[0]);
+                        int mM = Integer.parseInt(tiempoMax[1]);
+
+                        String[] tiempoP = t.split(":");
+                        int h = Integer.parseInt(tiempoP[0]);
+                        int m = Integer.parseInt(tiempoP[1]);
+
+                        //Comprobaciones de teimpo máximo
+                        //La hora puesta es mayor que la permitida
+                        if(h>hM){
+                            correcto = false;
+                        }
+                        //La hora puesta es igual que la permitida pero los minutos puestos son mayores que los permitidos
+                        if((h==hM)&&(m>mM)){
+                            correcto = false;
+                        }
+
+                        if (correcto) {
+                            Double coste = ((60 * h) + m) * precioZonaE;
+                            DecimalFormat f = new DecimalFormat("0.00");
+                            importe.setText(f.format(coste));
+                        }else{
+                            tiempo.setError("Dato incorrecto");
+                            importe.setText("00.00");
+                        }
+                    }else{
+                        tiempo.setError("Dato incorrecto");
+                        importe.setText("00.00");
+                    }
+                }else{
+                    importe.setText("00.00");
+                }
             break;
         }
     }
@@ -219,15 +396,6 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                 System.out.println(ciudades);
                 adaptadorCiudades = new ArrayAdapter<String>(Pagos.this, android.R.layout.simple_list_item_1,ciudades);
                 spCiudades.setAdapter(adaptadorCiudades);
-
-                //Cargar zonas de la primera ciudad
-                /*JSONArray jz = jc.getJSONObject(0).getJSONArray("zonas");
-                for(int i =0;i < jz.length();i++){
-                    zonas.add(jz.getJSONObject(i).getString("nombre"));
-                }
-                System.out.println(zonas);
-                adaptadorZonas = new ArrayAdapter<String>(Pagos.this, android.R.layout.simple_list_item_1,zonas);
-                spZonas.setAdapter(adaptadorZonas);*/
 
             } catch (JSONException e) {
                 e.printStackTrace();

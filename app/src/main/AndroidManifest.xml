@@ -26,7 +26,8 @@
         <activity android:name=".Editar" />
         <activity android:name=".EditarPassword" />
         <activity android:name=".Matriculas" />
-        <activity android:name=".Pagos"></activity>
+        <activity android:name=".Pagos" />
+        <activity android:name=".DatosPagoActivity"></activity>
     </application>
 
 </manifest>
