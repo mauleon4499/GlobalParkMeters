@@ -8,6 +8,9 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Button btnPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,13 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        btnPos = (Button) findViewById(R.id.btnPosicion);
+        btnPos.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Ayala jajajajaja LOL WTF BBQ", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
@@ -44,16 +55,20 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = service.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
+//        Código para usarlo en el móvil
+//        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+//        Criteria criteria = new Criteria();
+//        String provider = service.getBestProvider(criteria, false);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//
+//            return;
+//        }
+//        Location loc = service.getLastKnownLocation(provider);
+//        LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
 
-            return;
-        }
-        Location loc = service.getLastKnownLocation(provider);
-        LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
+        //Código para usarlo con el emulador
+        LatLng pos = new LatLng(42.46642, -2.442385);
         mMap.addMarker(new MarkerOptions().position(pos).title("Posición actual"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
 

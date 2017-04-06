@@ -47,20 +47,20 @@ public class Login extends AppCompatActivity {
 
         //Método para loguearse
         btnAcceder = (Button) findViewById(R.id.btnAcceder);
-        btnAcceder.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                String hash= getMd5Key(txtPwd.getText().toString());
-                new acceso(v).execute("http://"+getString(R.string.ip)+"/movil/login.php?usuario="+txtUser.getText().toString()+"&password="+hash);
-            }
-        });
+//        btnAcceder.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View v) {
+//                String hash= getMd5Key(txtPwd.getText().toString());
+//                new acceso(v).execute("http://"+getString(R.string.ip)+"/movil/login.php?usuario="+txtUser.getText().toString()+"&password="+hash);
+//            }
+//        });
 
         //pruebas para acceder al mapa - dejar comentado (SOLO PARA PRUEBAS)
         //AYALA, NO LO TOQUES
-//        btnAcceder.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View v) {
-//                Intent intent = new Intent (v.getContext(), Geolocalizacion.class);
-//                startActivityForResult(intent, 0); }
-//        });
+        btnAcceder.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Geolocalizacion.class);
+                startActivityForResult(intent, 0); }
+        });
     }
 
     //Método para comprobar el nombre de usuario y la contraseña
