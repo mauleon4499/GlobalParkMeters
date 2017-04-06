@@ -1,11 +1,9 @@
 package com.example.semauleo.globalparkmeters;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,9 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
@@ -43,13 +39,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import static com.example.semauleo.globalparkmeters.R.id.spZonas;
 import static com.example.semauleo.globalparkmeters.R.id.textView;
+import static com.example.semauleo.globalparkmeters.R.id.tiempo;
+import static com.example.semauleo.globalparkmeters.R.id.time;
 
 public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    TabHost TbH;
-
-    private EditText etPaypal;
 
     String id;
     Spinner spCiudades;
@@ -58,6 +54,8 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
 
     private ArrayList<String> ZonasHora = new ArrayList<String>();
     private ArrayList<Double> ZonasPrecio = new ArrayList<Double>();
+    //private ArrayList<Integer> idsCiudad = new ArrayList<Integer>();
+    private ArrayList<String> idsZona = new ArrayList<String>();
     private String horaZonaE;
     private Double precioZonaE;
 
@@ -73,6 +71,8 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
     private EditText tiempo;
     private EditText horaMax;
     private TextView importe;
+    private String ciudad_id;
+    private String zona_id;
 
     public static final int PAYPAL_REQUEST_CODE = 123;
 
@@ -89,21 +89,6 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagos);
-
-        TbH = (TabHost) findViewById(R.id.tabHost);
-        TbH.setup();
-
-        TabHost.TabSpec tab1 = TbH.newTabSpec("tab1");
-        TabHost.TabSpec tab2 = TbH.newTabSpec("tab2");
-
-        tab1.setIndicator("Datos parking");
-        tab1.setContent(R.id.Parking);
-
-        tab2.setIndicator("Tipo de pago");
-        tab2.setContent(R.id.Forma_Pago);
-
-        TbH.addTab(tab1);
-        TbH.addTab(tab2);
 
         tiempo = (EditText) findViewById(R.id.tiempo);
         horaMax = (EditText) findViewById(R.id.textoHora);
@@ -183,7 +168,6 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
             }
         });
 
-        etPaypal = (EditText) findViewById(R.id.etPaypal);
         pagar = (Button) findViewById(R.id.btnPagar);
         pagar.setOnClickListener(this);
         Intent intent = new Intent(this, PayPalService.class);
@@ -193,7 +177,11 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
 
     @Override
     public void onClick(View v) {
-        getPayment();
+        int zonaE = spZonas.getSelectedItemPosition();
+        //Comprobamos el tiempo y el select
+        if((zonaE != -1)&&(!tiempo.getText().toString().isEmpty())&&(!tiempo.getText().toString().equals(""))){
+            getPayment();
+        }
     }
 
     @Override
@@ -240,12 +228,18 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                         String paymentDetails = confirm.toJSONObject().toString(4);
                         Log.i("paymentExample", paymentDetails);
 
+                        //Pasar datos del pago de la zona
                         //Starting a new activity for the payment details and also putting the payment details with intent
                         startActivity(new Intent(this, DatosPagoActivity.class)
+                                .putExtra("tiempo",tiempo.getText().toString())
+                                .putExtra("user_id",id)
+                                .putExtra("ciudad_id",ciudad_id)
+                                .putExtra("ciudad",spCiudades.getSelectedItem().toString())
+                                .putExtra("zona_id",zona_id)
+                                .putExtra("zona",spZonas.getSelectedItem().toString())
+                                .putExtra("matricula",spMatricula.getSelectedItem().toString())
                                 .putExtra("PaymentDetails", paymentDetails)
                                 .putExtra("PaymentAmount", importe.getText().toString()));
-                        //Pasar datos del pago de la zona
-                        //IMPORTANTE: Pasar la ciudad, zona y tiempo
 
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -275,6 +269,7 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                     for(int i =0;i < jc.length();i++){
                         if (nomCiudad.equals(jc.getJSONObject(i).getString("ciudad"))) {
                             pos = i;
+                            ciudad_id = jc.getJSONObject(i).getString("ciudadID");
                         }
                     }
 
@@ -283,9 +278,11 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                         zonas.add(jz.getJSONObject(i).getString("nombre"));
                         ZonasPrecio.add(jz.getJSONObject(i).getDouble("precio"));
                         ZonasHora.add(jz.getJSONObject(i).getString("tiempo"));
+                        idsZona.add(jz.getJSONObject(i).getString("zonaID"));
                     }
                     horaZonaE = ZonasHora.get(0);
                     precioZonaE = ZonasPrecio.get(0);
+                    zona_id = idsZona.get(0);
                     horaMax.setText("Tiempo max: "+horaZonaE);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -304,6 +301,7 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                     if (zonaE.equals(zonas.get(i))) {
                        horaZonaE = ZonasHora.get(i);
                        precioZonaE = ZonasPrecio.get(i);
+                        zona_id = idsZona.get(i);
                    }
                 }
                 horaMax.setText("Tiempo max: "+horaZonaE);
