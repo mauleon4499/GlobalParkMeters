@@ -54,7 +54,7 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
         }
         Location loc = service.getLastKnownLocation(provider);
         LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(pos).title("Posición"));
+        mMap.addMarker(new MarkerOptions().position(pos).title("Posición actual"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
 
     }
