@@ -11,7 +11,9 @@ public class Principal extends AppCompatActivity {
 
     private Button btnPerfil;
     private Button btnPagar;
-    String id;
+    private Button btnMapa;
+
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,15 @@ public class Principal extends AppCompatActivity {
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), Pagos.class);
+                intent.putExtra("id", id);
+                startActivityForResult(intent, 0); }
+        });
+
+        //Método para acceder a la geolocalización
+        btnMapa = (Button) findViewById(R.id.btnMapa);
+        btnMapa.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Geolocalizacion.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });
