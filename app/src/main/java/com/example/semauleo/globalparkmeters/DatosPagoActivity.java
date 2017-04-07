@@ -60,6 +60,8 @@ public class DatosPagoActivity extends AppCompatActivity implements View.OnClick
         TextView txtCiudad = (TextView) findViewById(R.id.txtCiudad);
         TextView txtZona= (TextView) findViewById(R.id.txtZona);
         TextView txtMatricula = (TextView) findViewById(R.id.txtMatricula);
+        TextView txtFechaInicio = (TextView) findViewById(R.id.txtFechaInicio);
+        TextView txtFechaFin = (TextView) findViewById(R.id.txtFechaFin);
         Button btnVolver = (Button) findViewById(R.id.btnVolver);
 
         //Showing the details from json object
@@ -86,6 +88,9 @@ public class DatosPagoActivity extends AppCompatActivity implements View.OnClick
         c.add(Calendar.HOUR, h);
         c.add(Calendar.MINUTE, m);
         String fecha_fin = df.format(c.getTime());
+
+        txtFechaInicio.setText(fecha_inicio);
+        txtFechaFin.setText(fecha_fin);
 
         new DatosPagoActivity.guardarPago().execute("http://"+getString(R.string.ip)+"/movil/guardarPago.php?idUsuario="+id+"&idCiudad="+getIntent().getStringExtra("ciudad_id")+"&idZona="+getIntent().getStringExtra("zona_id")+"&idCodigo="+jsonDetails.getString("id")+"&matricula="+getIntent().getStringExtra("matricula")+"&importe="+paymentAmount+"&duracion="+getIntent().getStringExtra("tiempo")+"&formaPago="+jsonClient.getString("product_name")+"&fechaInicio="+fecha_inicio+"&fechaFin="+fecha_fin+"&estado="+jsonDetails.getString("state"));
     }
