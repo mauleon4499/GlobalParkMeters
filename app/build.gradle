@@ -26,6 +26,7 @@ dependencies {
     })
     //Pagos para PayPal
     compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:support-annotations:24.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.1.1'
     compile 'com.paypal.sdk:paypal-android-sdk:2.14.2'

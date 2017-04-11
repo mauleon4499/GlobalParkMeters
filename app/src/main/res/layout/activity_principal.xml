@@ -17,32 +17,6 @@
     android:layout_marginLeft="20dp"
     android:orientation="horizontal">
 
-    <TableRow android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:text="Configuración"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/btnConfiguracion"
-            android:textStyle="bold"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/btnMapa"
-            android:background="@android:color/holo_blue_light"
-            android:layout_margin="10dp"/>
-
-        <Button
-        android:text="Premium"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:id="@+id/btnPremium"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/btnConfiguracion"
-        android:background="@android:color/holo_blue_light"
-        android:layout_margin="10dp"/>
-    </TableRow>
-
     <TableRow
         android:layout_width="match_parent">
 
@@ -73,6 +47,33 @@
             android:layout_margin="10dp"/>
     </TableRow>
 
+    <TableRow android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="Tarifas"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_alignTop="@+id/btnConfiguracion"
+            android:layout_alignStart="@+id/btnPagar"
+            android:id="@+id/btnTarifas"
+            android:textStyle="bold"
+            android:background="@android:color/holo_blue_light"
+            android:layout_alignBottom="@+id/btnConfiguracion"
+            android:layout_margin="10dp"/>
+
+        <Button
+            android:text="Premium"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:id="@+id/btnPremium"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/btnConfiguracion"
+            android:background="@android:color/holo_blue_light"
+            android:layout_margin="10dp"/>
+    </TableRow>
+
     <TableRow>
 
         <Button
@@ -87,16 +88,15 @@
             android:layout_margin="10dp"/>
 
         <Button
-        android:text="Tarifas"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_alignTop="@+id/btnConfiguracion"
-        android:layout_alignStart="@+id/btnPagar"
-        android:id="@+id/btnTarifas"
-        android:textStyle="bold"
-        android:background="@android:color/holo_blue_light"
-        android:layout_alignBottom="@+id/btnConfiguracion"
-        android:layout_margin="10dp"/>
+            android:id="@+id/btnConfiguracion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/btnMapa"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_blue_light"
+            android:text="Configuración"
+            android:textStyle="bold" />
     </TableRow>
 
 </TableLayout>
