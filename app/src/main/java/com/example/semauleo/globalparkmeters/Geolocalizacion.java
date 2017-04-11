@@ -111,8 +111,7 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
         mMap.addMarker(new MarkerOptions().position(pos).title("Posición actual"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
-
-    //Método para obtener los datos de geolocalizacion anteriores
+    //Método para obtener los datos de geolocalizacion de la base de datos
     private class obtenerLocalizacion extends AsyncTask<String, Void, String> {
 
         @Override
