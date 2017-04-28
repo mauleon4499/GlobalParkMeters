@@ -1,20 +1,15 @@
 package com.example.semauleo.globalparkmeters;
 
-import android.Manifest;
+import android.*;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,38 +32,24 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+public class GeoZonas extends AppCompatActivity implements OnMapReadyCallback {
 
-public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallback {
-
-    private double actualLatitud;
-    private double actualLongitud;
+    private String id;
 
     private GoogleMap mMap;
-    private Button btnPos;
-
-    private  String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_geolocalizacion);
+        setContentView(R.layout.activity_geo_zonas);
 
         id = getIntent().getStringExtra("id");
 
-        //Consulta para obtener la localización anterior
-        new Geolocalizacion.obtenerLocalizacion().execute("http://"+getString(R.string.ip)+"/movil/datosLocalizacion.php?id="+id.toString().trim());
+        new GeoZonas.obtenerGeoZonas().execute("http://"+getString(R.string.ip)+"/movil/datosZonasGeo.php");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        btnPos = (Button) findViewById(R.id.btnPosicion);
-        btnPos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            new Geolocalizacion.guardarLocalizacion().execute("http://"+getString(R.string.ip)+"/movil/guardarLocalizacion.php?id="+id.toString().trim()+"&latitud="+actualLatitud+"&longitud="+actualLongitud);
-            }
-        });
     }
 
     /**
@@ -87,21 +69,20 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = service.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             return;
         }
         Location loc = service.getLastKnownLocation(provider);
-        actualLatitud = loc.getLatitude();
-        actualLongitud = loc.getLongitude();
         LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
 
         //Código para usarlo con el emulador
         mMap.addMarker(new MarkerOptions().position(pos).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)).title("Posición actual"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
+
     //Método para obtener los datos de geolocalizacion de la base de datos
-    private class obtenerLocalizacion extends AsyncTask<String, Void, String> {
+    private class obtenerGeoZonas extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -119,37 +100,21 @@ public class Geolocalizacion extends FragmentActivity implements OnMapReadyCallb
             try {
                 ja = new JSONArray(result);
                 if(ja.length() != 0){
-                    System.out.println("Datos: "+ja);
-                    Double lat = ja.getDouble(1);
-                    Double lon = ja.getDouble(2);
-                    LatLng pos = new LatLng(lat,lon);
+                    for(int i =0;i<ja.length();i++){
+                        JSONObject jo = ja.getJSONObject(i);
 
-                    //Código para usarlo con el emulador
-                    mMap.addMarker(new MarkerOptions().position(pos).title("Posición del coche"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+                        Double lat = jo.getDouble("latitud");
+                        Double lon = jo.getDouble("longitud");
+                        LatLng pos = new LatLng(lat,lon);
+                        //Código para usarlo con el emulador
+                        String nombre_zona = jo.getString("nombre_zona");
+                        String des = "Precio: " + jo.getString("precio") + " €/h // Tiempo máximo: " + jo.getString("tiempo_maximo") + " h";
+                        mMap.addMarker(new MarkerOptions().position(pos).title(nombre_zona).snippet(des));
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-        }
-    }
-
-    //Método para enviar datos a la base de datos
-    private class guardarLocalizacion extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                return downloadUrl(urls[0]);
-            } catch (IOException e) {
-                return "Unable to retrieve web page. URL may be invalid.";
-            }
-        }
-        @Override
-        protected void onPostExecute(String result) {
-
-            Toast.makeText(getApplicationContext(), "Se almacenaron los datos correctamente", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -14,10 +14,10 @@
         android:text="Cambiar contraseña"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnDatos"
-        android:layout_alignStart="@+id/btnDatos"
+        android:layout_below="@+id/btnGeoCoche"
+        android:layout_alignStart="@+id/btnGeoCoche"
         android:layout_marginTop="20dp"
-        android:id="@+id/btnPassword"
+        android:id="@+id/btnGeoZonas"
         android:background="@android:color/holo_blue_light"
         android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/btnDatos"
+        android:id="@+id/btnGeoCoche"
         android:background="@android:color/holo_blue_light"
         android:textStyle="bold"/>
 
@@ -40,6 +40,6 @@
         android:id="@+id/btnMatriculas"
         android:background="@android:color/holo_blue_light"
         android:textStyle="bold"
-        android:layout_below="@+id/btnPassword"
-        android:layout_alignStart="@+id/btnPassword" />
+        android:layout_below="@+id/btnGeoZonas"
+        android:layout_alignStart="@+id/btnGeoZonas" />
 </RelativeLayout>

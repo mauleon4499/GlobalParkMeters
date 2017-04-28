@@ -20,7 +20,7 @@ public class Perfil extends AppCompatActivity {
         id = getIntent().getStringExtra("id");
 
         //Método para acceder a editar los datos
-        btnDatos = (Button) findViewById(R.id.btnDatos);
+        btnDatos = (Button) findViewById(R.id.btnGeoCoche);
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), Editar.class);
@@ -29,7 +29,7 @@ public class Perfil extends AppCompatActivity {
         });
 
         //Método para acceder a cambiar contraseña
-        btnPassword = (Button) findViewById(R.id.btnPassword);
+        btnPassword = (Button) findViewById(R.id.btnGeoZonas);
         btnPassword.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), EditarPassword.class);

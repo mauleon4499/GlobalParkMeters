@@ -54,7 +54,6 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
 
     private ArrayList<String> ZonasHora = new ArrayList<String>();
     private ArrayList<Double> ZonasPrecio = new ArrayList<Double>();
-    //private ArrayList<Integer> idsCiudad = new ArrayList<Integer>();
     private ArrayList<String> idsZona = new ArrayList<String>();
     private String horaZonaE;
     private Double precioZonaE;
@@ -391,7 +390,7 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                 for(int i =0;i < jc.length();i++){
                     ciudades.add(jc.getJSONObject(i).getString("ciudad"));
                 }
-                System.out.println(ciudades);
+
                 adaptadorCiudades = new ArrayAdapter<String>(Pagos.this, android.R.layout.simple_list_item_1,ciudades);
                 spCiudades.setAdapter(adaptadorCiudades);
 

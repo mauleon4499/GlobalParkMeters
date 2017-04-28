@@ -43,7 +43,16 @@ public class Principal extends AppCompatActivity {
         btnMapa = (Button) findViewById(R.id.btnMapa);
         btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), Geolocalizacion.class);
+                Intent intent = new Intent (v.getContext(), MenuGeo.class);
+                intent.putExtra("id", id);
+                startActivityForResult(intent, 0); }
+        });
+
+        //Método para acceder a las tarifas
+        btnMapa = (Button) findViewById(R.id.btnTarifas);
+        btnMapa.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Tarifas.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });

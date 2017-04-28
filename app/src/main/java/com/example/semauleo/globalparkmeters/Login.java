@@ -103,7 +103,7 @@ public class Login extends AppCompatActivity {
         myurl = myurl.replace(" ","%20");
         InputStream is = null;
 
-        int len = 500;
+        int len = 50000;
 
         try {
             URL url = new URL(myurl);
