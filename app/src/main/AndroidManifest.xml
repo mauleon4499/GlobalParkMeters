@@ -51,7 +51,8 @@
 
         <activity android:name=".Tarifas" />
         <activity android:name=".MenuGeo" />
-        <activity android:name=".GeoZonas"></activity>
+        <activity android:name=".GeoZonas" />
+        <receiver android:name=".NotificationPublisher" />
     </application>
 
 </manifest>

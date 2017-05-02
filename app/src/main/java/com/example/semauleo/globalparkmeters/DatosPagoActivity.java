@@ -1,7 +1,14 @@
 package com.example.semauleo.globalparkmeters;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,8 +94,14 @@ public class DatosPagoActivity extends AppCompatActivity implements View.OnClick
         int m = Integer.parseInt(tiempoP[1]);
         c.add(Calendar.HOUR, h);
         c.add(Calendar.MINUTE, m);
+
         String fecha_fin = df.format(c.getTime());
 
+        //Configuración de aviso de fin de tiempo
+        int tiempo_mili = ((h * 60) + m) * 60 * 1000;
+        scheduleNotification(getNotification(fecha_fin), tiempo_mili);
+
+        //Mostrar tiempos de inicio y fin
         txtFechaInicio.setText(fecha_inicio);
         txtFechaFin.setText(fecha_fin);
 
@@ -158,5 +171,25 @@ public class DatosPagoActivity extends AppCompatActivity implements View.OnClick
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
+    }
+
+    private void scheduleNotification(Notification notification, int delay) {
+
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    private Notification getNotification(String content) {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Se te ha acabado el tiempo en el parking.");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.mipmap.logo);
+        return builder.build();
     }
 }
