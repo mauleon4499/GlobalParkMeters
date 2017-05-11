@@ -12,6 +12,8 @@ public class Principal extends AppCompatActivity {
     private Button btnPerfil;
     private Button btnPagar;
     private Button btnMapa;
+    private Button btnTarifas;
+    private Button btnListado;
 
     private String id;
 
@@ -22,7 +24,7 @@ public class Principal extends AppCompatActivity {
         id = getIntent().getStringExtra("id");
 
         //Método para acceder al perfil
-        btnPerfil = (Button) findViewById(R.id.btnPerfil);
+                btnPerfil = (Button) findViewById(R.id.btnPerfil);
         btnPerfil.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), Perfil.class);
@@ -49,10 +51,19 @@ public class Principal extends AppCompatActivity {
         });
 
         //Método para acceder a las tarifas
-        btnMapa = (Button) findViewById(R.id.btnTarifas);
-        btnMapa.setOnClickListener(new View.OnClickListener() {
+        btnTarifas = (Button) findViewById(R.id.btnTarifas);
+        btnTarifas.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), Tarifas.class);
+                intent.putExtra("id", id);
+                startActivityForResult(intent, 0); }
+        });
+
+        //Método para acceder a listado de pagos y multas
+        btnListado = (Button) findViewById(R.id.btnListado);
+        btnListado.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Listado.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });

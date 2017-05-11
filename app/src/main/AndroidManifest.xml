@@ -52,7 +52,12 @@
         <activity android:name=".Tarifas" />
         <activity android:name=".MenuGeo" />
         <activity android:name=".GeoZonas" />
+
         <receiver android:name=".NotificationPublisher" />
+
+        <activity android:name=".Listado" />
+        <activity android:name=".Multas" />
+        <activity android:name=".PagosRealizados"></activity>
     </application>
 
 </manifest>

@@ -14,10 +14,10 @@
         android:text="Cambiar contraseña"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnGeoCoche"
-        android:layout_alignStart="@+id/btnGeoCoche"
+        android:layout_below="@+id/btnMultas"
+        android:layout_alignStart="@+id/btnMultas"
         android:layout_marginTop="20dp"
-        android:id="@+id/btnGeoZonas"
+        android:id="@+id/btnPagos"
         android:background="@android:color/holo_blue_light"
         android:textStyle="bold" />
 
@@ -25,12 +25,12 @@
         android:text="Datos personales"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:id="@+id/btnGeoCoche"
+        android:id="@+id/btnMultas"
         android:background="@android:color/holo_blue_light"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Matrículas"
@@ -40,6 +40,6 @@
         android:id="@+id/btnMatriculas"
         android:background="@android:color/holo_blue_light"
         android:textStyle="bold"
-        android:layout_below="@+id/btnGeoZonas"
-        android:layout_alignStart="@+id/btnGeoZonas" />
+        android:layout_below="@+id/btnPagos"
+        android:layout_alignStart="@+id/btnPagos" />
 </RelativeLayout>

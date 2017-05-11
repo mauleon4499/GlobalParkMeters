@@ -11,18 +11,18 @@ android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="com.example.semauleo.globalparkmeters.MenuGeo">
 
     <Button
-        android:id="@+id/btnGeoZonas"
+        android:id="@+id/btnPagos"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnGeoCoche"
-        android:layout_below="@+id/btnGeoCoche"
+        android:layout_alignStart="@+id/btnMultas"
+        android:layout_below="@+id/btnMultas"
         android:layout_marginTop="17dp"
         android:background="@android:color/holo_blue_light"
         android:text="Localizar zonas"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btnGeoCoche"
+        android:id="@+id/btnMultas"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

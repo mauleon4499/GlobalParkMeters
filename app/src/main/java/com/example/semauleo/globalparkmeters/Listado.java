@@ -6,35 +6,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MenuGeo extends AppCompatActivity {
-
-    private Button btnGeoCoche;
-    private Button btnGeoZonas;
+public class Listado extends AppCompatActivity {
 
     private String id;
+
+    private Button btnMultas;
+    private Button btnPagos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_geo);
+        setContentView(R.layout.activity_listado);
 
         id = getIntent().getStringExtra("id");
 
-        btnGeoCoche = (Button) findViewById(R.id.btnMultas);
-        btnGeoCoche.setOnClickListener(new View.OnClickListener() {
+        //Método para acceder al listado de pagos
+        btnPagos = (Button) findViewById(R.id.btnPagos);
+        btnPagos.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), Geolocalizacion.class);
+                Intent intent = new Intent (v.getContext(), PagosRealizados.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });
 
-        btnGeoZonas = (Button) findViewById(R.id.btnPagos);
-        btnGeoZonas.setOnClickListener(new View.OnClickListener() {
+        //Método para acceder a las multas
+        btnMultas = (Button) findViewById(R.id.btnMultas);
+        btnMultas.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), GeoZonas.class);
+                Intent intent = new Intent (v.getContext(), Multas.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });
-
     }
 }
