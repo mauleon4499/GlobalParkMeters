@@ -17,6 +17,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -131,7 +132,7 @@ public class Login extends AppCompatActivity {
     //Nétodo para leer los datos que envia el servidor
     public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
+        reader = new InputStreamReader(stream, StandardCharsets.ISO_8859_1);
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
