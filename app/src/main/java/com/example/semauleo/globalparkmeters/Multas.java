@@ -83,8 +83,6 @@ public class Multas extends AppCompatActivity {
                     multas.add(multa);
                     adaptadorMultas.notifyDataSetChanged();
                 }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

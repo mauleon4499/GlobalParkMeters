@@ -54,12 +54,12 @@
             android:text="Tarifas"
             android:layout_width="140dp"
             android:layout_height="140dp"
-            android:layout_alignTop="@+id/btnConfiguracion"
+            android:layout_alignTop="@+id/btnPrueba"
             android:layout_alignStart="@+id/btnPagar"
             android:id="@+id/btnTarifas"
             android:textStyle="bold"
             android:background="@android:color/holo_blue_light"
-            android:layout_alignBottom="@+id/btnConfiguracion"
+            android:layout_alignBottom="@+id/btnPrueba"
             android:layout_margin="10dp"/>
 
         <Button
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/btnConfiguracion"
+            android:layout_alignStart="@+id/btnPrueba"
             android:layout_margin="10dp"
             android:background="@android:color/holo_blue_light"
             android:text="Pagos y multas"
@@ -88,7 +88,7 @@
             android:layout_margin="10dp"/>
 
         <Button
-            android:id="@+id/btnConfiguracion"
+            android:id="@+id/btnPrueba"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignStart="@+id/btnMapa"

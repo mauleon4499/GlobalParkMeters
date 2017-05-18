@@ -226,7 +226,7 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                     try {
                         //Getting the payment details
                         String paymentDetails = confirm.toJSONObject().toString(4);
-                        Log.i("paymentExample", paymentDetails);
+                        Log.i("payment", paymentDetails);
 
                         //Pasar datos del pago de la zona
                         //Starting a new activity for the payment details and also putting the payment details with intent
@@ -242,13 +242,13 @@ public class Pagos extends AppCompatActivity implements AdapterView.OnItemSelect
                                 .putExtra("PaymentAmount", importe.getText().toString()));
 
                     } catch (JSONException e) {
-                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                        Log.e("payment", "an extremely unlikely failure occurred: ", e);
                     }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i("paymentExample", "The user canceled.");
+                Log.i("payment", "The user canceled.");
             } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+                Log.i("payment", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             }
         }
     }

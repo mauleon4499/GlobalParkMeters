@@ -20,15 +20,15 @@
         android:background="@android:color/holo_blue_light" />
 
     <Button
-        android:text="Añadir matrícula"
+        android:id="@+id/addMatricula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addMatricula"
         android:layout_above="@+id/btnSaveMatriculas"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"
         android:background="@android:color/holo_blue_light"
-        android:onClick="agregar"/>
+        android:onClick="agregar"
+        android:text="Añadir" />
 
     <ListView
         android:id="@+id/lvMatriculas"

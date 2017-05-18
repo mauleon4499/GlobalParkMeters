@@ -13,6 +13,7 @@ tools:context="com.example.semauleo.globalparkmeters.PagosRealizados">
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="Lista de pagos"
+        android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:textStyle="bold" />
 

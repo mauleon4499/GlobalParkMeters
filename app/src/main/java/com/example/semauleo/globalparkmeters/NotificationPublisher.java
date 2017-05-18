@@ -11,6 +11,7 @@ import android.content.Intent;
  */
 
 public class NotificationPublisher extends BroadcastReceiver {
+
     public static String NOTIFICATION_ID = "1";
     public static String NOTIFICATION = "notification";
 

@@ -57,7 +57,7 @@
 
         <activity android:name=".Listado" />
         <activity android:name=".Multas" />
-        <activity android:name=".PagosRealizados"></activity>
+        <activity android:name=".PagosRealizados" />
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ public class Principal extends AppCompatActivity {
     private Button btnMapa;
     private Button btnTarifas;
     private Button btnListado;
+    private Button btnPrueba;
 
     private String id;
 

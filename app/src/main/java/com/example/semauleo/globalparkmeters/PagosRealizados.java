@@ -82,11 +82,9 @@ public class PagosRealizados extends AppCompatActivity {
                     pagos.add(pago);
                     adaptadorPagos.notifyDataSetChanged();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
