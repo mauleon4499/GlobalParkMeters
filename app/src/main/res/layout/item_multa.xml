@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/aTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        android:text="MULTA" />
+
+    <TextView
+        android:id="@+id/tPrecio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/aTitulo"
+        android:textColor="@android:color/black"
+        android:text="Matrícula: " />
+
+    <TextView
+        android:id="@+id/tTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha: "
+        android:layout_below="@+id/tPrecio"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/black"
+        android:layout_alignEnd="@+id/tPrecio" />
+
+    <TextView
+        android:id="@+id/mImporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Importe: "
+        android:layout_below="@+id/tTiempo"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/black"
+        android:layout_alignEnd="@+id/tTiempo" />
+
+    <TextView
+        android:id="@+id/mPagada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/mImporte"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mImporte"
+        android:textColor="@android:color/black"
+        android:text="Pagada: " />
+
+    <TextView
+        android:id="@+id/mMotivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mPagada"
+        android:text="Motivo: "
+        android:textColor="@android:color/black"
+        android:layout_alignEnd="@+id/mPagada" />
+
+    <TextView
+        android:id="@+id/mtMatricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/aTitulo"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/tPrecio" />
+
+    <TextView
+        android:id="@+id/mtFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/mtMatricula"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/tPrecio" />
+
+    <TextView
+        android:id="@+id/mtImporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mPagada"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/tTiempo" />
+
+    <TextView
+        android:id="@+id/mtPagada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/mtImporte"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/mImporte" />
+
+    <TextView
+        android:id="@+id/mtMotivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mMotivo"
+        android:layout_alignBottom="@+id/mMotivo"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/mPagada" />
+
+</RelativeLayout>

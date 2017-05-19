@@ -12,6 +12,7 @@ public class Listado extends AppCompatActivity {
 
     private Button btnMultas;
     private Button btnPagos;
+    private Button btnTickets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,15 @@ public class Listado extends AppCompatActivity {
         btnMultas.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent (v.getContext(), Multas.class);
+                intent.putExtra("id", id);
+                startActivityForResult(intent, 0); }
+        });
+
+        //Método para acceder a las multas
+        btnTickets = (Button) findViewById(R.id.btnTickes);
+        btnTickets.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Activos.class);
                 intent.putExtra("id", id);
                 startActivityForResult(intent, 0); }
         });

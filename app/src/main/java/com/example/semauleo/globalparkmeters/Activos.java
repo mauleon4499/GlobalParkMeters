@@ -19,41 +19,46 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class PagosRealizados extends AppCompatActivity {
+public class Activos extends AppCompatActivity {
 
     private String id;
 
-    //private ArrayList<String> pagos;
-    //private ArrayAdapter<String> adaptadorPagos;
-    private ListView lvPagos;
+    private ArrayList<String> pagos;
+    private ArrayAdapter<String> adaptadorPagos;
+    private ListView lvPagosActivos;
 
-    private AdapterPago adapter;
-    ArrayList<pago> ListaPagos = new ArrayList<pago>();
+    private AdapterActivo adapter;
+    ArrayList<activo> ListaActios = new ArrayList<activo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pagos_realizados);
+        setContentView(R.layout.activity_activos);
 
         id = getIntent().getStringExtra("id");
 
-        lvPagos = (ListView) findViewById(R.id.lvPagos);
-        adapter = new AdapterPago(this, ListaPagos);
-        lvPagos.setAdapter(adapter);
+        lvPagosActivos = (ListView) findViewById(R.id.lvPagosActivos);
+        adapter = new AdapterActivo(this, ListaActios);
+        lvPagosActivos.setAdapter(adapter);
 
         /*pagos=new ArrayList<String>();
         adaptadorPagos=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,pagos);
-        lvPagos = (ListView) findViewById(R.id.lvPagos);
-        lvPagos.setAdapter(adaptadorPagos);*/
+        lvPagosActivos = (ListView) findViewById(R.id.lvPagosActivos);
+        lvPagosActivos.setAdapter(adaptadorPagos);*/
 
         //Obtener los datos de las ciudades, zonas, precios y tiempos máximos
-        new PagosRealizados.obtenerPagos().execute("http://"+getString(R.string.ip)+"/movil/datosPagos.php?id="+id.toString().trim());
+        new Activos.obtenerActivos().execute("http://"+getString(R.string.ip)+"/movil/datosActivos.php?id="+id.toString().trim());
     }
 
     //Método para comprobar el nombre de usuario y la contraseña
-    private class obtenerPagos extends AsyncTask<String, Void, String> {
+    private class obtenerActivos extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -77,7 +82,19 @@ public class PagosRealizados extends AppCompatActivity {
                 for(int i =0;i < ja.length();i++){
                     JSONObject jop = ja.getJSONObject(i);
 
-                    ListaPagos.add(new pago(jop.getString("id"),jop.getString("ciudad"),jop.getString("zona"),jop.getString("matricula"),jop.getString("importe"),jop.getString("fecha_inicio"),jop.getString("fecha_fin")));
+                    Calendar c = Calendar.getInstance();
+                    c.add(Calendar.HOUR, 2);
+                    Date actual = c.getTime();
+                    long ta = actual.getTime();
+
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String t = jop.getString("fecha_fin");
+                    Date tiempo_final = df.parse(t);
+                    long tf = tiempo_final.getTime();
+
+                    long td = tf-ta;
+                    ListaActios.add(new activo(jop.getString("id"),jop.getString("ciudad"),jop.getString("zona"),jop.getString("matricula"),jop.getString("importe"),jop.getString("fecha_inicio"),jop.getString("fecha_fin"),td));
+
                     /*String pago = "";
 
                     pago = pago + "Id: "+ jop.getString("id") +"\n";
@@ -91,9 +108,12 @@ public class PagosRealizados extends AppCompatActivity {
                     pagos.add(pago);
                     adaptadorPagos.notifyDataSetChanged();*/
                 }
-                adapter = new AdapterPago(adapter.getActivity(), ListaPagos);
-                lvPagos.setAdapter(adapter);
+
+                adapter = new AdapterActivo(adapter.getActivity(), ListaActios);
+                lvPagosActivos.setAdapter(adapter);
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }

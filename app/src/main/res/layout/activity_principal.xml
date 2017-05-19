@@ -35,15 +35,15 @@
             android:textStyle="bold" />
 
         <Button
-        android:text="Mapa"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:id="@+id/btnMapa"
-        android:textStyle="bold"
-        android:background="@android:color/holo_blue_light"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="14dp"
+            android:text="Mapa"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:id="@+id/btnMapa"
+            android:textStyle="bold"
+            android:background="@android:color/holo_blue_light"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="14dp"
             android:layout_margin="10dp"/>
     </TableRow>
 

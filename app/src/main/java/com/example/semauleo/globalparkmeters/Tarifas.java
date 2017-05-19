@@ -41,9 +41,12 @@ public class Tarifas extends AppCompatActivity implements AdapterView.OnItemSele
 
     private ArrayList<String> ciudades = new ArrayList<String>();
     private ArrayAdapter<String> adaptadorCiudades;
-    private ArrayList<String> zonas;
-    private ArrayAdapter<String> adaptadorZonas;
+    //private ArrayList<String> zonas;
+    //private ArrayAdapter<String> adaptadorZonas;
     private String ciudad_id;
+
+    private AdapterTarifa adapter;
+    ArrayList<tarifa> ListaTarifas = new ArrayList<tarifa>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +56,14 @@ public class Tarifas extends AppCompatActivity implements AdapterView.OnItemSele
         id = getIntent().getStringExtra("id");
         spCiudades = (Spinner) findViewById(R.id.spCiudades);
 
-        zonas=new ArrayList<String>();
+        lvZonas = (ListView) findViewById(R.id.lvZonas);
+        adapter = new AdapterTarifa(this, ListaTarifas);
+        lvZonas.setAdapter(adapter);
+
+        /*zonas=new ArrayList<String>();
         adaptadorZonas=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,zonas);
         lvZonas = (ListView) findViewById(R.id.lvZonas);
-        lvZonas.setAdapter(adaptadorZonas);
+        lvZonas.setAdapter(adaptadorZonas);*/
 
         //Obtener los datos de las ciudades, zonas, precios y tiempos máximos
         new Tarifas.obtenerDatos().execute("http://"+getString(R.string.ip)+"/movil/datosZonas.php?id="+id.toString().trim());
@@ -70,8 +77,8 @@ public class Tarifas extends AppCompatActivity implements AdapterView.OnItemSele
         String nomCiudad = parent.getSelectedItem().toString();
 
         //Reseteamos el ListView
-        zonas.clear();
-        adaptadorZonas.notifyDataSetChanged();
+        ListaTarifas.clear();
+        //adaptadorZonas.notifyDataSetChanged();
 
         JSONArray jc = null;
         int pos = 100;
@@ -86,15 +93,20 @@ public class Tarifas extends AppCompatActivity implements AdapterView.OnItemSele
 
             JSONArray jz = jc.getJSONObject(pos).getJSONArray("zonas");
             for(int i =0;i < jz.length();i++){
-                String datoZona = "";
+
+                ListaTarifas.add(new tarifa(jz.getJSONObject(i).getString("nombre"),jz.getJSONObject(i).getDouble("precio"),jz.getJSONObject(i).getString("tiempo")));
+
+                /*String datoZona = "";
 
                 datoZona = datoZona + "Zona:  "+ jz.getJSONObject(i).getString("nombre") + "\n";
                 datoZona = datoZona + "Precio:  " + jz.getJSONObject(i).getDouble("precio") + " euros/minuto" +"\n";
                 datoZona = datoZona + "Tiempo máximo:  " + jz.getJSONObject(i).getString("tiempo") + " horas";
 
                 zonas.add(datoZona);
-                adaptadorZonas.notifyDataSetChanged();
+                adaptadorZonas.notifyDataSetChanged();*/
             }
+            adapter = new AdapterTarifa(adapter.getActivity(), ListaTarifas);
+            lvZonas.setAdapter(adapter);
 
         } catch (JSONException e) {
             e.printStackTrace();

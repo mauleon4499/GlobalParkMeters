@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/aTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        android:text="PAGO" />
+
+    <TextView
+        android:id="@+id/pId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Id: "
+        android:layout_below="@+id/aTitulo"
+        android:layout_alignEnd="@+id/pImporte"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pImporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Importe: "
+        android:layout_below="@+id/pId"
+        android:layout_alignEnd="@+id/pCiudad"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pCiudad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ciudad: "
+        android:layout_below="@+id/pImporte"
+        android:layout_alignEnd="@+id/pZona"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pZona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zona: "
+        android:layout_below="@+id/pCiudad"
+        android:layout_alignEnd="@+id/pMatricula"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pMatricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Matrícula: "
+        android:layout_below="@+id/pZona"
+        android:layout_alignEnd="@+id/pFechaInicio"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pFechaInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pMatricula"
+        android:textColor="@android:color/black"
+        android:text="Fecha inicio: " />
+
+    <TextView
+        android:id="@+id/pFechaFin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/pFechaInicio"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pFechaInicio"
+        android:textColor="@android:color/black"
+        android:text="Fecha fin: " />
+
+    <TextView
+        android:id="@+id/ptId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/aTitulo"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pId" />
+
+    <TextView
+        android:id="@+id/ptImporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pImporte"
+        android:layout_alignBottom="@+id/pImporte"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/pId"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ptCiudad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pZona"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pImporte" />
+
+    <TextView
+        android:id="@+id/ptZona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pMatricula"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pCiudad" />
+
+    <TextView
+        android:id="@+id/ptMatricula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ptZona"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pZona" />
+
+    <TextView
+        android:id="@+id/ptFechaInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pFechaFin"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pMatricula" />
+
+    <TextView
+        android:id="@+id/ptFechaFin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/pFechaFin"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/pFechaInicio" />
+
+</RelativeLayout>

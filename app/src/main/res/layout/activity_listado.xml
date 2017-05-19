@@ -29,4 +29,15 @@
             android:layout_below="@+id/btnPagos"
             android:layout_centerHorizontal="true" />
 
+        <Button
+            android:id="@+id/btnTickes"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_light"
+            android:text="Tickets activos"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/btnMultas"
+            android:layout_alignStart="@+id/btnMultas" />
+
 </RelativeLayout>

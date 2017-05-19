@@ -21,25 +21,33 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import static com.example.semauleo.globalparkmeters.R.layout.activity_multas;
+
 public class Multas extends AppCompatActivity {
 
     private String id;
 
-    private ArrayList<String> multas;
-    private ArrayAdapter<String> adaptadorMultas;
+    //private ArrayList<String> multas;
+    //private ArrayAdapter<String> adaptadorMultas;
     private ListView lvMultas;
+    private AdapterMulta adapter;
+    ArrayList<multa> ListaMultas = new ArrayList<multa>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multas);
+        setContentView(activity_multas);
 
         id = getIntent().getStringExtra("id");
 
-        multas=new ArrayList<String>();
+        lvMultas = (ListView) findViewById(R.id.lvMultas);
+        adapter = new AdapterMulta(this, ListaMultas);
+        lvMultas.setAdapter(adapter);
+
+        /*multas=new ArrayList<String>();
         adaptadorMultas=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,multas);
         lvMultas = (ListView) findViewById(R.id.lvMultas);
-        lvMultas.setAdapter(adaptadorMultas);
+        lvMultas.setAdapter(adaptadorMultas);*/
         //Obtener los datos de las ciudades, zonas, precios y tiempos máximos
         new Multas.obtenerMultas().execute("http://"+getString(R.string.ip)+"/movil/datosMultas.php?id="+id.toString().trim());
     }
@@ -66,8 +74,16 @@ public class Multas extends AppCompatActivity {
                 //Mostramos loa datos de las multas
                 for(int i =0;i < ja.length();i++){
                     JSONObject jo = ja.getJSONObject(i);
+                    String estado = jo.getString("pagada");
+                    String valor;
+                    if(estado.equals("0")){
+                         valor = "No";
+                    }else{
+                        valor = "Si";
+                    }
+                    ListaMultas.add(new multa(jo.getString("matricula"),jo.getString("fecha_hora"),jo.getString("importe"),valor,jo.getString("motivo")));
 
-                    String multa = "";
+                    /*String multa = "";
 
                     multa = multa + "Matrícula:  "+ jo.getString("matricula") + "\n";
                     multa = multa + "Importe:  " + jo.getString("importe") + " euros" + "\n";
@@ -78,11 +94,13 @@ public class Multas extends AppCompatActivity {
                     }else{
                         multa = multa + "Estado:  Pagada"  +"\n";
                     }
-                    multa = multa + "Motiva:  " + jo.get("motivo");
+                    multa = multa + "Motivo:  " + jo.get("motivo");
 
                     multas.add(multa);
-                    adaptadorMultas.notifyDataSetChanged();
+                    adaptadorMultas.notifyDataSetChanged();*/
                 }
+                adapter = new AdapterMulta(adapter.getActivity(), ListaMultas);
+                lvMultas.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
