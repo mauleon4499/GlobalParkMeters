@@ -10,14 +10,19 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -31,6 +36,8 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static android.R.id.content;
 
 public class GeoZonas extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -108,7 +115,7 @@ public class GeoZonas extends AppCompatActivity implements OnMapReadyCallback {
                         LatLng pos = new LatLng(lat,lon);
                         //Código para usarlo con el emulador
                         String nombre_zona = jo.getString("nombre_zona");
-                        String des = "Precio: " + jo.getString("precio") + " €/h // Tiempo máximo: " + jo.getString("tiempo_maximo") + " h";
+                        String des = "Precio: " + jo.getString("precio") + " €/h";
                         mMap.addMarker(new MarkerOptions().position(pos).title(nombre_zona).snippet(des));
                     }
                 }
